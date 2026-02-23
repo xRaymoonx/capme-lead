@@ -88,11 +88,17 @@ export default function InfoPage() {
 
   const active = sections.find((s) => s.id === activeId) ?? sections[0];
 
+  const stepStatuses = useMemo(
+    () => ["active", "todo", "todo", "todo", "todo", "todo", "todo"] as const,
+    [],
+  );
+
   return (
     <WizardShell
       step={0}
+      totalSteps={7}
       stepLabel="Infos"
-      stepStates={["active", "todo", "todo", "todo", "todo", "todo", "todo"]}
+      stepStatuses={stepStatuses as any}
     >
       <div className="space-y-5">
         <div className="flex items-start justify-between gap-4">
@@ -106,11 +112,9 @@ export default function InfoPage() {
             </p>
           </div>
 
-          <a href="javascript:history.back()">
-            <Button variant="secondary" onClick={() => history.back()}>
-              Zurück
-            </Button>
-          </a>
+          <Button variant="secondary" onClick={() => history.back()}>
+            Zurück
+          </Button>
         </div>
 
         <Card>
@@ -168,9 +172,7 @@ export default function InfoPage() {
                 </h2>
 
                 {active.subtitle && (
-                  <p className="mt-2 text-sm text-zinc-300">
-                    {active.subtitle}
-                  </p>
+                  <p className="mt-2 text-sm text-zinc-300">{active.subtitle}</p>
                 )}
 
                 <ul className="mt-4 space-y-2 text-sm text-zinc-200">
