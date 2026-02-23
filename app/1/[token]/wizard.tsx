@@ -230,7 +230,9 @@ export default function Wizard({ token }: { token: string }) {
         <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
             <div className="md:col-span-7">
-              <div className="text-xs text-zinc-400">CAPME • PV-Qualifizierung</div>
+              <div className="text-xs text-zinc-400">
+                CAPME • PV-Qualifizierung
+              </div>
               <h1 className="mt-1 text-2xl font-semibold text-zinc-100">
                 {heroTitle}
               </h1>
@@ -262,7 +264,6 @@ export default function Wizard({ token }: { token: string }) {
             next();
           }}
           onBack={back}
-          attempted={!!attempted[1]}
         />
       )}
 
@@ -275,7 +276,6 @@ export default function Wizard({ token }: { token: string }) {
             next();
           }}
           onBack={back}
-          attempted={!!attempted[2]}
         />
       )}
 
