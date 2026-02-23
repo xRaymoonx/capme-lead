@@ -122,7 +122,7 @@ export default function InfoModal({
                   </h2>
                 </div>
 
-                <Button variant="ghost" onClick={onClose}>
+                <Button variant="secondary" onClick={onClose}>
                   Schließen
                 </Button>
               </div>
