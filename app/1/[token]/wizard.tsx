@@ -75,7 +75,7 @@ export default function Wizard({ token }: { token: string }) {
     );
   }, [building]);
 
-  // Energie/Wünsche/Budget kannst du später schärfer machen – erstmal neutral:
+  // Energie/Wünsche/Budget später schärfen – erstmal neutral:
   const isEnergyValid = true;
   const isMotivationValid = true;
   const isBudgetValid = true;
@@ -100,27 +100,6 @@ export default function Wizard({ token }: { token: string }) {
                   ? "Review"
                   : "Fertig";
 
-  const heroTitle =
-    step <= 1
-      ? "Kurz ein paar Infos zur besseren Planung"
-      : step === 6
-        ? "Zusammenfassung"
-        : "PV-Nachbereitung";
-
-  const heroSubtitle =
-    step === 6
-      ? "Bitte einmal in Ruhe durchlesen. Danach können Sie absenden."
-      : "Ohne Druck, ohne Marketing. Einfach strukturiert.";
-
-  const heroImage =
-    step === 0
-      ? "/images/modules.jpg"
-      : step === 2
-        ? "/images/roof.jpg"
-        : step === 3
-          ? "/images/inverter.jpg"
-          : "/images/capme.jpg";
-
   function markAttempt(s: number) {
     setAttempted((a) => ({ ...a, [s]: true }));
   }
@@ -137,7 +116,6 @@ export default function Wizard({ token }: { token: string }) {
   }
 
   function next() {
-    // wenn beim aktuellen Step required fehlt -> nur markieren & NICHT weiter
     if (!canProceedFrom(step)) {
       markAttempt(step);
       return;
@@ -187,16 +165,12 @@ export default function Wizard({ token }: { token: string }) {
       const wasAttempted = !!attempted[i];
 
       if (isActive) {
-        // Rot nur wenn versucht & invalid
         if (wasAttempted && !isValid) return "error";
         return "active";
       }
 
-      if (isDone) {
-        return "done";
-      }
+      if (isDone) return "done";
 
-      // Zukunft: neutral, solange nicht attempted
       if (wasAttempted && !isValid) return "error";
       return "idle";
     });
@@ -212,7 +186,6 @@ export default function Wizard({ token }: { token: string }) {
   ]);
 
   function onJump(to: number) {
-    // optional: Jump nur zu bereits erreichten Steps erlauben
     if (to < 0 || to >= totalSteps) return;
     setStep(to);
   }
@@ -225,34 +198,6 @@ export default function Wizard({ token }: { token: string }) {
       stepStatuses={stepStatuses}
       onJump={onJump}
     >
-      {/* ✅ Hero-Block in children (WizardShell nimmt keine hero* Props) */}
-      <div className="mb-6">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
-            <div className="md:col-span-7">
-              <div className="text-xs text-zinc-400">
-                CAPME • PV-Qualifizierung
-              </div>
-              <h1 className="mt-1 text-2xl font-semibold text-zinc-100">
-                {heroTitle}
-              </h1>
-              <p className="mt-2 text-sm text-zinc-300">{heroSubtitle}</p>
-            </div>
-
-            <div className="md:col-span-5">
-              <div className="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
-                <img
-                  src={heroImage}
-                  alt={heroTitle}
-                  className="w-full h-[180px] md:h-[200px] object-contain"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {step === 0 && <StepIntro token={token} onNext={next} />}
 
       {step === 1 && (
