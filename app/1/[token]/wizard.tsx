@@ -193,8 +193,6 @@ export default function Wizard({ token }: { token: string }) {
       }
 
       if (isDone) {
-        // wenn der User weitergegangen ist, gehen wir von "done" aus
-        // (du kannst hier später noch "error" für zurückliegende Steps erlauben)
         return "done";
       }
 
@@ -224,12 +222,35 @@ export default function Wizard({ token }: { token: string }) {
       step={step}
       totalSteps={totalSteps}
       stepLabel={stepLabel}
-      heroTitle={heroTitle}
-      heroSubtitle={heroSubtitle}
-      heroImage={heroImage}
       stepStatuses={stepStatuses}
       onJump={onJump}
     >
+      {/* ✅ Hero-Block in children (WizardShell nimmt keine hero* Props) */}
+      <div className="mb-6">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+            <div className="md:col-span-7">
+              <div className="text-xs text-zinc-400">CAPME • PV-Qualifizierung</div>
+              <h1 className="mt-1 text-2xl font-semibold text-zinc-100">
+                {heroTitle}
+              </h1>
+              <p className="mt-2 text-sm text-zinc-300">{heroSubtitle}</p>
+            </div>
+
+            <div className="md:col-span-5">
+              <div className="rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
+                <img
+                  src={heroImage}
+                  alt={heroTitle}
+                  className="w-full h-[180px] md:h-[200px] object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {step === 0 && <StepIntro token={token} onNext={next} />}
 
       {step === 1 && (
@@ -241,7 +262,6 @@ export default function Wizard({ token }: { token: string }) {
             next();
           }}
           onBack={back}
-          // Optional: damit StepBasics seine eigene Meldung sauber zeigt:
           attempted={!!attempted[1]}
         />
       )}
@@ -296,7 +316,7 @@ export default function Wizard({ token }: { token: string }) {
           budget={budget}
           onBack={() => setStep(5)}
           onEdit={(s) => setStep(s)}
-          onSubmit={() => setStep(7)} // oder: (leadId) => setStep(7)
+          onSubmit={() => setStep(7)}
         />
       )}
 
