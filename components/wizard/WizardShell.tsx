@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Card from "../ui/Card";
 import TopHeader from "./TopHeader";
 import ProgressBar, { StepStatus } from "./ProgressBar";
 
@@ -14,10 +13,10 @@ export default function WizardShell({
   children,
 }: {
   step: number;
-  totalSteps: number; // bei dir 7
+  totalSteps: number; // z.B. 7
   stepLabel: string;
   onJump?: (to: number) => void;
-  stepStatuses: StepStatus[]; // Länge 7: Intro..Review
+  stepStatuses: StepStatus[]; // Länge = totalSteps (Intro..Review)
   children: React.ReactNode;
 }) {
   const safeStep = Number.isFinite(step) ? step : 0;
@@ -52,14 +51,9 @@ export default function WizardShell({
           />
         </div>
 
-        <Card>
-          <div key={safeStep} className="animate-fade">
-            {children}
-          </div>
-        </Card>
-
-        <div className="text-xs text-zinc-500">
-          Ruhig & sachlich – strukturiert und klar.
+        {/* Inhalt: clean, ohne Wrapper-Card */}
+        <div key={safeStep} className="animate-fade">
+          {children}
         </div>
       </div>
     </div>

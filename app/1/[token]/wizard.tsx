@@ -75,7 +75,7 @@ export default function Wizard({ token }: { token: string }) {
     );
   }, [building]);
 
-  // Energie/Wünsche/Budget später schärfen – erstmal neutral:
+  // Energie/Wünsche/Budget kannst du später schärfer machen – erstmal neutral:
   const isEnergyValid = true;
   const isMotivationValid = true;
   const isBudgetValid = true;
@@ -116,6 +116,7 @@ export default function Wizard({ token }: { token: string }) {
   }
 
   function next() {
+    // wenn beim aktuellen Step required fehlt -> nur markieren & NICHT weiter
     if (!canProceedFrom(step)) {
       markAttempt(step);
       return;
